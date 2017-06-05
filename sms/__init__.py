@@ -40,7 +40,7 @@ def send_sms(tpl_id=None,
                       recipient_list,connection=connection).send()
 
 
-MOBILE_RE = r'^(13[0-9]|15[012356789]|18[0-9]|14[57]|17[6-8])[0-9]{8}$'
+MOBILE_RE = r'^(13[0-9]|15[012356789]|18[0-9]|14[57]|17[013678])[0-9]{8}$'
 MOBILE_RE_PATTERN = re.compile(MOBILE_RE)
 def is_correct_mobile(mnumber):
     """
