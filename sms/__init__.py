@@ -6,7 +6,14 @@ from __future__ import unicode_literals
 
 import re
 
-from django.utils.module_loading import import_by_path
+import django
+from distutils.version import StrictVersion
+
+if StrictVersion(django.get_version()) > StrictVersion("1.8"):
+    from django.utils.module_loading import import_string
+else:
+    from django.utils.module_loading import import_by_path as import_string
+
 from sms.message import SMSMessage
 from sms.conf import settings as sms_settings
 import sms
@@ -21,7 +28,7 @@ def get_connection(backend=None, fail_silently=False, **kwds):
     Both fail_silently and other keyword arguments are used in the
     constructor of the backend.
     """
-    klass = import_by_path(backend or sms_settings.SMS_BACKEND)
+    klass = import_string(backend or sms_settings.SMS_BACKEND)
     return klass(fail_silently=fail_silently, **kwds)
 
 
